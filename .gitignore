@@ -1,2 +1,3 @@
-./.idea/
-./Lang/*.pyc
+
+/.idea/
+/Lang/*.pyc
