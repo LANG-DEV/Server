@@ -1,18 +1,29 @@
-attributes = {
-    'userid': 'varchar(36)',
-    'username': 'varchar(20)',
-    'email': 'varchar(50)',
-    'password': 'varchar(20)',
-    'firstname': 'varchar(35)',
-    'lastname': 'varchar(35)',
-    'birthday': 'date',
+from schema import Schema
 
-}
 
-primary_keys = [
-    'userid',
-]
+class Identity(Schema):
+    """
+    This class represents the table schema of Identity table in database.
+    """
 
-foreign_keys = {
+    def __init__(self):
+        self.attributes = {
+            'userid': 'varchar(36)',
+            'username': 'varchar(20)',
+            'email': 'varchar(50)',
+            'password': 'varchar(20)',
+            'firstname': 'varchar(35)',
+            'lastname': 'varchar(35)',
+            'birthday': 'date',
+            'deviceToken': 'varchar(50)',
+            'timeCreated': 'timestamp',
+            'timeLastModified': 'timestamp',
+        }
 
-}
+        self.primary_keys = [
+            'userid',
+        ]
+
+        self.foreign_keys = {
+
+        }
