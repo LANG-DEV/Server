@@ -4,6 +4,8 @@ class Schema:
     """
 
     def __init__(self):
+        self.name = None
         self.attributes = {}
         self.primary_keys = []
         self.foreign_keys = {}
+        self.indexes = []
