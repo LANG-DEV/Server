@@ -11,7 +11,7 @@ class ChatRoom(Schema):
 
         self.attributes = {
             'chatroomid': 'varchar(36)',
-            'eventid': 'varchar(36)',
+            'groupid': 'varchar(36)',
             'userCount': 'integer',
             'timeCreated': 'timestamp',
             'timeLastModified': 'timestamp',
@@ -22,5 +22,5 @@ class ChatRoom(Schema):
         ]
 
         self.foreign_keys = {
-            'eventid': 'Event(eventid)',
+            'groupid': 'Group(groupid)',
         }

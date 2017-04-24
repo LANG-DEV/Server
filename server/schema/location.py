@@ -2,9 +2,9 @@ from schema import Schema
 
 
 class Location(Schema):
-    '''
+    """
     This class represents the table schema of Location table in database.
-    '''
+    """
 
     def __init__(self):
         self.name = 'Location'

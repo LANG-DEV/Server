@@ -11,7 +11,7 @@ class Board(Schema):
 
         self.attributes = {
             'boardid': 'varchar(36)',
-            'eventid': 'varchar(36)',
+            'groupid': 'varchar(36)',
             'locationid': 'varchar(36)',
             'time': 'timestamp with time zone',
             'timeCreated': 'timestamp',
@@ -23,6 +23,6 @@ class Board(Schema):
         ]
 
         self.foreign_keys = {
-            'eventid': 'Event(eventid)',
+            'groupid': 'Group(groupid)',
             'locationid': 'Location(locationid)',
         }

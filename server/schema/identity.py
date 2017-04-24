@@ -11,12 +11,15 @@ class Identity(Schema):
 
         self.attributes = {
             'userid': 'varchar(36)',
-            'username': 'varchar(20)',
+            'username': 'varchar(20) unique',
+            'icon': 'varchar(36)',
             'email': 'varchar(50)',
             'password': 'varchar(20)',
             'firstname': 'varchar(35)',
             'lastname': 'varchar(35)',
             'birthday': 'date',
+            'facebook': 'varchar(50)',
+            'status': 'varchar(20)',
             'deviceToken': 'varchar(50)',
             'timeCreated': 'timestamp',
             'timeLastModified': 'timestamp',
@@ -27,5 +30,5 @@ class Identity(Schema):
         ]
 
         self.foreign_keys = {
-
+            'icon': 'Image(imageid)',
         }
