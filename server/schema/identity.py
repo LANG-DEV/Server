@@ -7,6 +7,8 @@ class Identity(Schema):
     """
 
     def __init__(self):
+        self.name = 'Identity'
+
         self.attributes = {
             'userid': 'varchar(36)',
             'username': 'varchar(20)',

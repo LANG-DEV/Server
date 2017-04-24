@@ -7,6 +7,8 @@ class Relation(Schema):
     """
 
     def __init__(self):
+        self.name = 'Relation'
+
         self.attributes = {
             'userId1': 'varchar(36)',
             'userId2': 'varchar(36)',
