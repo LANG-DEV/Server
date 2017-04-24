@@ -1,27 +1,47 @@
-# Script to connect to database and create table
+# script for create table
 
 import psycopg2
+
 import Lang.settings
 
-try:
-    conn = psycopg2.connect("dbname='lang_test' user='lang_admin' host='lang-test.crd09uw5ryqx.us-west-2.rds.amazonaws.com' password='Pm*j7o49VD'")
-    print "Connected to the database"
-except:
-    print "Unable to connect to the database"
+import schema
+import identity
 
-cur = conn.cursor()
+def main():
+    host = Lang.settings.DATABASES['default']['HOST']
+    db_name = Lang.settings.DATABASES['default']['NAME']
+    admin = Lang.settings.DATABASES['default']['USER']
+    password = Lang.settings.DATABASES['default']['PASSWORD']
+    conn = connectServer(host, db_name, admin, password)
 
-# cur.execute("""CREATE TABLE test(id INT PRIMARY KEY,
-#                                  name VARCHAR)""")
+    tables = createTableList()
 
-# cur.execute("""INSERT INTO test VALUES(1234, 'Tong')""")
+    cur = conn.cursor()
+    createTable(cur, tables)
+    conn.commit()
 
-cur.execute("""SELECT * FROM test""")
+    # result = cur.fetchone()
+    # print result
 
-conn.commit()
+def connectServer(host, db_name, admin, password):
+    conn = psycopg2.connect("host='" + host + "' dbname='" + db_name + "' user='" + admin + "' password='" + password + "'")
+    # print "host='" + host + "' dbname='" + db_name + "' user='" + admin + "' password='" + password + "'"
+    return conn
 
-rows = cur.fetchall()
-for row in rows:
-    for col in row:
-        print col,
-    print
+def createTable(cur, tables):
+    for table in tables:
+        quary = "CREATE TABLE "
+        build_attribute = "("
+        for name, type in schema.Schema(table).attributes:
+            build_attribute += name + type
+        print build_attribute
+
+def deleteSchema(cur):
+    cur.execute("""DELETE SCHEMA""")
+
+def createTableList():
+    tables = [identity.Identity()]
+    return tables
+
+if __name__ == "__main__":
+	main()
