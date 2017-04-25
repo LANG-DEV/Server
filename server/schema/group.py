@@ -7,7 +7,7 @@ class Group(Schema):
     """
 
     def __init__(self):
-        self.name = 'Group'
+        self.name = 'LangGroup'
 
         self.attributes = {
             'groupid': 'varchar(36)',

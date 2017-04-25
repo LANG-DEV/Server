@@ -10,7 +10,7 @@ class Message(Schema):
         self.name = 'Message'
 
         self.attributes = {
-            'messageid': 'varchar(36',
+            'messageid': 'varchar(36)',
             'chatroomid': 'varchar(36)',
             'content': 'varchar(1000)',
             'type': 'varchar(15)',

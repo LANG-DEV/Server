@@ -20,6 +20,6 @@ class UserInGroup(Schema):
         ]
 
         self.foreign_keys = {
-            'groupid': 'Group(groupid)',
+            'groupid': 'LangGroup(groupid)',
             'userid': 'Identity(userid)',
         }

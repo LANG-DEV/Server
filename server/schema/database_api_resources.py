@@ -13,7 +13,7 @@ class DatabaseAPIResources():
     def createTable(self, table):
         cur = self.connection.cursor()
         query = MutableString()
-        query += "CREATE TABLE "
+        query += "CREATE TABLE public."
         query += table.name + "(\n"
         for var_name in table.attributes:
             type = table.attributes[var_name]
@@ -21,7 +21,7 @@ class DatabaseAPIResources():
         query += "PRIMARY KEY("
         for key in table.primary_keys:
             query += key + ", "
-        query = query[0: len(query) - 3] + "))"
+        query = query[0: len(query) - 2] + "))"
 
         print "executing...\n" + query + "\n"
         try:
@@ -29,6 +29,7 @@ class DatabaseAPIResources():
             self.connection.commit()
             print "Created table " + table.name
         except Exception as e:
+            self.connection.rollback()
             print "Could not create table " + table.name
             print e.message
 
@@ -37,21 +38,26 @@ class DatabaseAPIResources():
             self.addForeignKeysToTable(table)
 
     def addForeignKeysToTable(self, table):
-        query = MutableString()
-        query += "ALTER TABLE " + table.name + "\n"
-        query += "ADD FOREIGN KEY("
         for key in table.foreign_keys:
             table_ref = table.foreign_keys[key]
-            query += key + " "
-            query += "REFERENCES " + table_ref + ", "
-        query = query[0: len(query) - 3] + ")\n"
+            self.addForeignKeyToTable(table.name, key, table_ref)
+
+    def addForeignKeyToTable(self, table_name, key, table_ref):
+        cur = self.connection.cursor()
+        query = MutableString()
+        query += "ALTER TABLE " + table_name + "\n"
+        query += "ADD FOREIGN KEY("
+        query += key + ") "
+        query += "REFERENCES " + table_ref
         print "executing...\n" + query + "\n"
         try:
             cur.execute(str(query))
             self.connection.commit()
-            print "Added foreign keys to " + table.name
-        except:
-            print "Could not add foreign keys to " + table.name
+            print "Added foreign keys to " + table_name
+        except Exception as e:
+            self.connection.rollback()
+            print "Could not add foreign keys to " + table_name
+            print e.message
 
     def queryTable(self, table_name):
         cur = self.connection.cursor()
@@ -74,5 +80,33 @@ class DatabaseAPIResources():
         query += "DROP SCHEMA "
         query += schema
         query += " CASCADE"
-        cur.execute(str(query))
-        self.connection.commit()
+        try:
+            cur.execute(str(query))
+            self.connection.commit()
+        except Exception as e:
+            print e.message
+
+    def createSchema(self, schema):
+        cur = self.connection.cursor()
+        query = MutableString()
+        query += "CREATE SCHEMA "
+        query += schema
+        try:
+            cur.execute(str(query))
+            self.connection.commit()
+        except Exception as e:
+            print e.message
+
+    def executeQuery(self, query):
+        cur = self.connection.cursor()
+        try:
+            cur.execute(query)
+            # result = cur.fetchone()
+            self.connection.commit()
+            # self.printResult(result)
+        except Exception as e:
+            e.message
+
+
+    def printResult(self, result):
+        print result

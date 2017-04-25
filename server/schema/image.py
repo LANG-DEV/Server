@@ -24,5 +24,5 @@ class Image(Schema):
         ]
 
         self.foreign_keys = {
-            'groupid': 'Group(grourpid)',
+            'groupid': 'LangGroup(grourpid)',
         }
