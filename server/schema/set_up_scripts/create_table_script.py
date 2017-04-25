@@ -19,7 +19,7 @@ def main():
 
 def createTableList():
     tables = [board.Board(), chat_room.ChatRoom(), group.Group(), image.Image(), location.Location(), message.Message(),
-              option.Option(), poll.Poll(), relation.Relation(), user_in_group.UserInGroup(), vote.Vote()]
+              option.Option(), poll.Poll(), relation.Relation(), user_in_group.UserInGroup(), vote.Vote(), identity.Identity()]
     # tables = [chat_room.ChatRoom()]
     return tables
 
