@@ -7,6 +7,7 @@ class Vote(Schema):
     """
 
     def __init__(self):
+        self.name = "Vote";
         self.attributes = {
             'userid': 'varchar(36)',
             'optionid': 'varchar(36)',

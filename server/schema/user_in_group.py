@@ -7,6 +7,7 @@ class UserInGroup(Schema):
     """
 
     def __init__(self):
+        self.name = "UserInGroup"
         self.attributes = {
             'groupid': 'varchar(36)',
             'userid': 'varchar(36)',

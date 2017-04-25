@@ -24,5 +24,5 @@ class Image(Schema):
         ]
 
         self.foreign_keys = {
-            'eventid': 'Event(eventid)',
+            'groupid': 'Group(grourpid)',
         }

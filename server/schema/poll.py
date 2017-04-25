@@ -1,12 +1,13 @@
 from schema import Schema
 
 
-class poll(Schema):
+class Poll(Schema):
     """
     This class represents the table schema of Poll table in database.
     """
 
     def __init__(self):
+        self.name = "Poll"
         self.attributes = {
             'pollid': 'varchar(36)',
             'status': 'varchar(20)',
