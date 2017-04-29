@@ -19,3 +19,5 @@ class LangEncoder(DjangoJSONEncoder):
 class IdentitySerializer(serializers.ModelSerializer):
     class Meta:
         model = identity_model.IdentityModel
+        fields = ('url', 'username', 'password')
+
