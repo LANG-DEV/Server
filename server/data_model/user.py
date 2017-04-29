@@ -1,13 +1,13 @@
 from sqlbuilder.smartsql import Q, T
 from sql_string_builder import convertToQueryString
 from server.database_access_layer.query_executor import QueryExecutor
+import uuid
 
 class User:
     'An object that represents a single user in lang'
 
     def __init__(self):
         self.queryExecutor = QueryExecutor()
-        pass
 
     def signUp(self, username, password, firstName, lastName):
         """
@@ -16,17 +16,17 @@ class User:
         :param password:
         :param firstName:
         :param lastName
-        :return: userID if successful? or a boolean indicating success or failure?
+        :return: (currently T/F indicating succeed or not)
         table involved: Identity
         """
 
         # generate query checking if the username exists
         q1 = convertToQueryString(Q(T.Identity).fields('*').where(T.Identity.username == username).count())
-        if self.queryExecutor.executeStringQueryWithResult(q1) > 0:
+        if self.queryExecutor.executeStringQueryWithResult(q1)[1][0] > 0:
             print 'username already exists'
             return False
 
-        userId = None # generate userId
+        userId = uuid.uuid4().hex  # generate userId
 
         # generate query inserting the new user into Identity table
         # can add more information
@@ -35,12 +35,12 @@ class User:
                     T.Identity.username: username,
                     T.Identity.password: password,
                     T.Identity.firstName: firstName,
-                    T.Identity.lastName: lastName}))
+                    T.Identity.lastName: lastName,
+                    T.Identity.status: 'offline'}))
         self.queryExecutor.executeStringQueryWithoutResult(q2)
 
         print 'sign up successfully'
         return True
-
 
     def logIn(self, username, password):
         """
@@ -48,34 +48,64 @@ class User:
         multiple devices?
         :param username:
         :param password:
-        :return: succeed or not. (return userId as well?)
+        :return: (currently T/F indicating succeed or not)
         table involved: User
         """
         # 1. check if the username exists
         q1 = convertToQueryString(Q(T.Identity).fields('*').where(T.Identity.username == username).count())
-        if self.queryExecutor.executeStringQueryWithResult(q1) == 0:
+        if self.queryExecutor.executeStringQueryWithResult(q1)[1][0] == 0:
             print 'username does not exist'
             return False
 
         # 2. check if the password is correct
         q2 = convertToQueryString(Q(T.Identity).fields(T.Identity.password).where(T.Identity.username == username))
-        if self.queryExecutor.executeStringQueryWithResult(q1) != password:
+        if self.queryExecutor.executeStringQueryWithResult(q2)[1][0] != password:
             print 'password does not match'
             return False
 
         # 3. check status?
-        q3 = convertToQueryString(Q.Identity).fields(T.Identity.status).where(T.Identity.username == username)
-        status = self.queryExecutor.executeStringQueryWithResult(q3)
+        q3 = convertToQueryString(Q(T.Identity).fields(T.Identity.status).where(T.Identity.username == username))
+        status = self.queryExecutor.executeStringQueryWithResult(q3)[1][0]
+        if status != 'offline':
+            # TODO: logout previous login automatically?
+            print 'already in lang!'
+            return True
 
-        # 4. change status to active??
-        
+        # 4. change status to preLang
+        q4 = convertToQueryString(Q(T.Identity).
+                                  where(T.Identity.username == username).
+                                  update({T.Identity.status: 'preLang'}))
+        self.queryExecutor.executeStringQueryWithoutResult(q4)
 
-    def logOut(self):
+        print 'logged in successfully'
+        return True
+
+    def logOut(self, username):
         """
         Log out the current user.
         :return: succeed or not.
         """
-        pass
+        # 1. check if the username exists
+        q1 = convertToQueryString(Q(T.Identity).fields('*').where(T.Identity.username == username).count())
+        if self.queryExecutor.executeStringQueryWithResult(q1)[1][0] == 0:
+            print 'username does not exist'
+            return False
+
+        # 2. check status?
+        q2 = convertToQueryString(Q(T.Identity).fields(T.Identity.status).where(T.Identity.username == username))
+        status = self.queryExecutor.executeStringQueryWithResult(q2)[1][0]
+        if status == 'offline':
+            print 'already offline!'
+            return True
+
+        # 3. change status
+        q3 = convertToQueryString(Q(T.Identity).
+                                  where(T.Identity.username == username).
+                                  update({T.Identity.status: 'offline'}))
+        self.queryExecutor.executeStringQueryWithoutResult(q3)
+
+        print 'logged out successfully'
+        return True
 
     def changePassword(self, oldPassword, newPassword):
         """
