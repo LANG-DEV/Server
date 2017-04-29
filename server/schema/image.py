@@ -23,5 +23,5 @@ class Image(Schema):
         ]
 
         self.foreign_keys = {
-            'groupId': 'LangGroup(groupId)',
+            'imageId': 'LangGroup(groupId)',
         }

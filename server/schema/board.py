@@ -23,6 +23,6 @@ class Board(Schema):
         ]
 
         self.foreign_keys = {
-            'groupId': 'Group(groupId)',
+            'groupId': 'LangGroup(groupId)',
             'locationId': 'Location(locationId)',
         }
