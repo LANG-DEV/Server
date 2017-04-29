@@ -12,7 +12,7 @@ class Identity(Schema):
         self.attributes = {
             'userId': 'varchar(36)',
             'username': 'varchar(20) unique',
-            'profileImage': 'varchar(36)',
+            'profileImageId': 'varchar(36)',
             'email': 'varchar(50)',
             'password': 'varchar(20)',
             'firstName': 'varchar(35)',
@@ -30,5 +30,5 @@ class Identity(Schema):
         ]
 
         self.foreign_keys = {
-            'profileImage': 'Image(imageId)',
+            'profileImageId': 'Image(imageId)',
         }

@@ -1,5 +1,3 @@
-from UserString import MutableString
-
 import psycopg2
 
 import Lang.settings
@@ -11,19 +9,16 @@ class QueryExecutor:
         db_name = Lang.settings.DATABASES['default']['NAME']
         admin = Lang.settings.DATABASES['default']['USER']
         password = Lang.settings.DATABASES['default']['PASSWORD']
-        try:
-            self.connection = psycopg2.connect(
-                "host='" + host + "' dbname='" + db_name + "' user='" + admin + "' password='" + password + "'")
-            print "connected to database " + db_name
-        except Exception as e:
-            self.connection = None
-            print e.message
+        self.connection = psycopg2.connect(
+            "host='" + host + "' dbname='" + db_name + "' user='" + admin + "' password='" + password + "'")
+        print "connected to database " + db_name
+        self.connection = None
 
     # return result as a list
     def executeStringQueryWithResult(self, query):
         cur = self.connection.cursor()
-        cur.execute(query)
         print "executing...\n" + query + "\n"
+        cur.execute(query)
         colnames = [desc[0] for desc in cur.description]
         resultList = []
         resultList.append(colnames)
@@ -35,6 +30,6 @@ class QueryExecutor:
 
     def executeStringQueryWithoutResult(self, query):
         cur = self.connection.cursor()
-        cur.execute(query)
         print "executing...\n" + query + "\n"
+        cur.execute(query)
         self.connection.commit()

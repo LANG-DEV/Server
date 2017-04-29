@@ -2,7 +2,7 @@ import query_executor
 
 def main():
     executor = query_executor.QueryExecutor()
-    executor.executeStringQueryWithoutResult("DROP SCHEMA public CASCADE")
+    executor.executeStringQueryWithoutResult("...DROP SCHEMA public CASCADE")
     executor.executeStringQueryWithoutResult("CREATE SCHEMA public")
     executor.executeStringQueryWithoutResult("CREATE TABLE public.test(username varchar(36), age int)")
     executor.executeStringQueryWithoutResult("INSERT INTO test VALUES ('zoewithbigtong', 23)")

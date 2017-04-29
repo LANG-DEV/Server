@@ -10,7 +10,6 @@ class Board(Schema):
         self.name = 'Board'
 
         self.attributes = {
-            'boardId': 'varchar(36)',
             'groupId': 'varchar(36)',
             'locationId': 'varchar(36)',
             'time': 'timestamp with time zone',
@@ -19,7 +18,7 @@ class Board(Schema):
         }
 
         self.primary_keys = [
-            'boardId',
+            'groupId',
         ]
 
         self.foreign_keys = {
