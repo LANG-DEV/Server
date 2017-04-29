@@ -17,13 +17,22 @@ from django.conf.urls import include
 from django.conf.urls import url
 from django.contrib import admin
 from rest_framework import routers
+from django.http import HttpResponse
+from rest_framework.decorators import api_view
 
-from server.api_routes import messaging_routes
+
+from server.views import IdentityViewSet
 
 router = routers.DefaultRouter()
-#router.register(r'messaging', messaging_routes)
+router.register(r'identity', IdentityViewSet)
+
+@api_view(['GET'])
+def method():
+    return HttpResponse('Hello World')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/v1/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^$', method),
 ]
+urlpatterns = router.urls
