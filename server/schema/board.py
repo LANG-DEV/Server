@@ -10,19 +10,19 @@ class Board(Schema):
         self.name = 'Board'
 
         self.attributes = {
-            'boardid': 'varchar(36)',
-            'groupid': 'varchar(36)',
-            'locationid': 'varchar(36)',
+            'boardId': 'varchar(36)',
+            'groupId': 'varchar(36)',
+            'locationId': 'varchar(36)',
             'time': 'timestamp with time zone',
             'timeCreated': 'timestamp',
             'timeLastModified': 'timestamp',
         }
 
         self.primary_keys = [
-            'boardid',
+            'boardId',
         ]
 
         self.foreign_keys = {
-            'groupid': 'Group(groupid)',
-            'locationid': 'Location(locationid)',
+            'groupId': 'Group(groupId)',
+            'locationId': 'Location(locationId)',
         }

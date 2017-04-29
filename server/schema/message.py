@@ -10,8 +10,8 @@ class Message(Schema):
         self.name = 'Message'
 
         self.attributes = {
-            'messageid': 'varchar(36)',
-            'chatroomid': 'varchar(36)',
+            'messageId': 'varchar(36)',
+            'chatRoomId': 'varchar(36)',
             'content': 'varchar(1000)',
             'type': 'varchar(15)',
             'timeCreated': 'timestamp',
@@ -19,9 +19,9 @@ class Message(Schema):
         }
 
         self.primary_keys = [
-            'messageid',
+            'messageId',
         ]
 
         self.foreign_keys = {
-            'chatroomid': 'ChatRoom(chatroomid)',
+            'chatRoomId': 'ChatRoom(chatRoomId)',
         }

@@ -10,9 +10,8 @@ class Image(Schema):
         self.name = 'Image'
 
         self.attributes = {
-            'imageid': 'varchar(36)',
+            'imageId': 'varchar(36)',
             'endpoint': 'varchar(200)',
-            'eventid': 'varchar(36)',
             'width': 'integer',
             'height': 'integer',
             'timeCreated': 'timestamp',
@@ -20,9 +19,9 @@ class Image(Schema):
         }
 
         self.primary_keys = [
-            'imageid',
+            'imageId',
         ]
 
         self.foreign_keys = {
-            'groupid': 'LangGroup(grourpid)',
+            'groupId': 'LangGroup(groupId)',
         }

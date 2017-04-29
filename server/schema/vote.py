@@ -9,18 +9,18 @@ class Vote(Schema):
     def __init__(self):
         self.name = "Vote";
         self.attributes = {
-            'userid': 'varchar(36)',
-            'optionid': 'varchar(36)',
-            'pollid': 'varchar(36)',
+            'userId': 'varchar(36)',
+            'optionId': 'varchar(36)',
+            'pollId': 'varchar(36)',
         }
 
         self.primary_keys = [
-            'userid',
-            'optionid',
+            'userId',
+            'optionId',
         ]
 
         self.foreign_keys = {
-            'userid': 'Identity(userid)',
-            'optionid': 'Option(optionid)',
-            'pollid': 'Poll(pollid)',
+            'userId': 'Identity(userId)',
+            'optionId': 'Option(optionId)',
+            'pollId': 'Poll(pollId)',
         }

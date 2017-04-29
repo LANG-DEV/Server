@@ -10,17 +10,17 @@ class ChatRoom(Schema):
         self.name = 'ChatRoom'
 
         self.attributes = {
-            'chatroomid': 'varchar(36)',
-            'groupid': 'varchar(36)',
+            'chatRoomId': 'varchar(36)',
+            'groupId': 'varchar(36)',
             'userCount': 'integer',
             'timeCreated': 'timestamp',
             'timeLastModified': 'timestamp',
         }
 
         self.primary_keys = [
-            'chatroomid',
+            'chatRoomId',
         ]
 
         self.foreign_keys = {
-            'groupid': 'Group(groupid)',
+            'groupId': 'LangGroup(groupId)',
         }

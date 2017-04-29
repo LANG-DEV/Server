@@ -9,17 +9,17 @@ class UserInGroup(Schema):
     def __init__(self):
         self.name = "UserInGroup"
         self.attributes = {
-            'groupid': 'varchar(36)',
-            'userid': 'varchar(36)',
+            'groupId': 'varchar(36)',
+            'userId': 'varchar(36)',
             'status': 'varchar(20)',
         }
 
         self.primary_keys = [
-            'groupid',
-            'userid',
+            'groupId',
+            'userId',
         ]
 
         self.foreign_keys = {
-            'groupid': 'LangGroup(groupid)',
-            'userid': 'Identity(userid)',
+            'groupId': 'LangGroup(groupId)',
+            'userId': 'Identity(userId)',
         }

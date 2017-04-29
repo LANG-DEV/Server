@@ -10,7 +10,7 @@ class Location(Schema):
         self.name = 'Location'
 
         self.attributes = {
-            'locationid': 'varchar(36)',
+            'locationId': 'varchar(36)',
             'latitude': 'double precision',
             'longitude': 'double precision',
             'address': 'varchar(100)',
@@ -18,7 +18,7 @@ class Location(Schema):
         }
 
         self.primary_keys = [
-            'locationid',
+            'locationId',
         ]
 
         self.foreign_keys = {

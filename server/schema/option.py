@@ -10,19 +10,19 @@ class Option(Schema):
         self.name = 'Option'
 
         self.attributes = {
-            'optionid': 'varchar(36)',
-            'pollid': 'varchar(36)',
-            'messageid': 'varchar(36)',
+            'optionId': 'varchar(36)',
+            'pollId': 'varchar(36)',
+            'messageId': 'varchar(36)',
             'voteCount': 'integer',
             'timeCreated': 'timestamp',
             'timeLastModified': 'timestamp',
         }
 
         self.primary_keys = [
-            'optionid',
+            'optionId',
         ]
 
         self.foreign_keys = {
-            'pollid': 'Poll(pollid)',
-            'messageid': 'Message(messageid)',
+            'pollId': 'Poll(pollId)',
+            'messageId': 'Message(messageId)',
         }

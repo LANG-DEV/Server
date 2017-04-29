@@ -10,13 +10,13 @@ class Identity(Schema):
         self.name = 'Identity'
 
         self.attributes = {
-            'userid': 'varchar(36)',
+            'userId': 'varchar(36)',
             'username': 'varchar(20) unique',
-            'icon': 'varchar(36)',
+            'profileImage': 'varchar(36)',
             'email': 'varchar(50)',
             'password': 'varchar(20)',
-            'firstname': 'varchar(35)',
-            'lastname': 'varchar(35)',
+            'firstName': 'varchar(35)',
+            'lastName': 'varchar(35)',
             'birthday': 'date',
             'facebook': 'varchar(50)',
             'status': 'varchar(20)',
@@ -26,9 +26,9 @@ class Identity(Schema):
         }
 
         self.primary_keys = [
-            'userid',
+            'userId',
         ]
 
         self.foreign_keys = {
-            'icon': 'Image(imageid)',
+            'profileImage': 'Image(imageId)',
         }

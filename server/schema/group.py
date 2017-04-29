@@ -10,9 +10,9 @@ class Group(Schema):
         self.name = 'LangGroup'
 
         self.attributes = {
-            'groupid': 'varchar(36)',
-            'chatroomid': 'varchar(36)',
-            'boardid': 'varchar(36)',
+            'groupId': 'varchar(36)',
+            'chatRoomId': 'varchar(36)',
+            'boardId': 'varchar(36)',
             'capacity': 'integer',
             'userCount': 'integer',
             'name': 'varchar(20)',
@@ -22,10 +22,10 @@ class Group(Schema):
         }
 
         self.primary_keys = [
-            'groupid',
+            'groupId',
         ]
 
         self.foreign_keys = {
-            'chatroomid': 'ChatRoom(chatroomid)',
-            'boardid': 'Board(boardid)',
+            'chatRoomId': 'ChatRoom(chatRoomId)',
+            'boardId': 'Board(boardId)',
         }

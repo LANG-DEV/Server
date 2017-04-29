@@ -9,14 +9,14 @@ class Poll(Schema):
     def __init__(self):
         self.name = "Poll"
         self.attributes = {
-            'pollid': 'varchar(36)',
+            'pollId': 'varchar(36)',
             'status': 'varchar(20)',
         }
 
         self.primary_keys = [
-            'pollid',
+            'pollId',
         ]
 
         self.foreign_keys = {
-            'pollid': 'Message(messageid)',
+            'pollId': 'Message(messageId)',
         }
