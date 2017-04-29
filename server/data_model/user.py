@@ -1,5 +1,5 @@
 from sqlbuilder.smartsql import Q, T
-from sqlStringBuilder import convertToQueryString
+from sql_string_builder import convertToQueryString
 from server.database_access_layer.query_executor import QueryExecutor
 
 class User:
@@ -9,12 +9,13 @@ class User:
         self.queryExecutor = QueryExecutor()
         pass
 
-    def signUp(self, username, password, firstname, lastname):
+    def signUp(self, username, password, firstName, lastName):
         """
         Create a new user (add a new entry to the User table)
         :param username:
         :param password:
-        :param fullname:
+        :param firstName:
+        :param lastName
         :return: userID if successful? or a boolean indicating success or failure?
         table involved: Identity
         """
@@ -25,16 +26,16 @@ class User:
             print 'username already exists'
             return False
 
-        userid = None # generate userid
+        userId = None # generate userId
 
         # generate query inserting the new user into Identity table
         # can add more information
         q2 = convertToQueryString(Q(T.Identity).insert({
-                    T.Identity.userid: userid,
+                    T.Identity.userId: userId,
                     T.Identity.username: username,
                     T.Identity.password: password,
-                    T.Identity.firstname: firstname,
-                    T.Identity.lastname: lastname}))
+                    T.Identity.firstName: firstName,
+                    T.Identity.lastName: lastName}))
         self.queryExecutor.executeStringQueryWithoutResult(q2)
 
         print 'sign up successfully'
