@@ -12,7 +12,6 @@ class QueryExecutor:
         self.connection = psycopg2.connect(
             "host='" + host + "' dbname='" + db_name + "' user='" + admin + "' password='" + password + "'")
         print "connected to database " + db_name
-        self.connection = None
 
     # return result as a list
     def executeStringQueryWithResult(self, query):
