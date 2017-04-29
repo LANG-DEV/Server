@@ -18,12 +18,14 @@ from django.conf.urls import url
 from django.contrib import admin
 from rest_framework import routers
 
+from server import views
 from server.api_routes import messaging_routes
 
 router = routers.DefaultRouter()
 #router.register(r'messaging', messaging_routes)
+router.register(r'Identities', views.IdentityViewSet)
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^api/v1/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
