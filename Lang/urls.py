@@ -19,11 +19,9 @@ from django.contrib import admin
 from rest_framework import routers
 
 from server import views
-from server.api_routes import messaging_routes
 
 router = routers.DefaultRouter()
-#router.register(r'messaging', messaging_routes)
-router.register(r'Identities', views.IdentityViewSet)
+router.register(r'identity', views.IdentityViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
