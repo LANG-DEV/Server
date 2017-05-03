@@ -4,10 +4,10 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 from django.shortcuts import render
-from serializers import IdentitySerializer
+from serializers import IdentitySerializer, LangGroupSerializer
 
 # Create your views here.
-from server.models import Identity
+from server.models import Identity, LangGroup
 
 
 class IdentityViewSet(viewsets.ModelViewSet):
@@ -20,3 +20,8 @@ class IdentityViewSet(viewsets.ModelViewSet):
     @list_route(methods=['get', 'post'])
     def signup(self, request, pk=None):
         return Response({'Message': 'HelloWorld'})
+
+
+class LangGroupViewSet(viewsets.ModelViewSet):
+    queryset = LangGroup.objects.all()
+    serializer_class = LangGroupSerializer
