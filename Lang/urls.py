@@ -22,6 +22,7 @@ from server import views
 
 router = routers.DefaultRouter()
 router.register(r'identity', views.IdentityViewSet)
+router.register(r'lang_group', views.LangGroupViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

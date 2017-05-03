@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import uuid
 
+import django
 from django.db import models
 from django.utils import timezone
 
@@ -71,3 +72,48 @@ class Identity(models.Model):
             first_name=user_info['first_name'],
             last_name=user_info['last_name'],
             email=user_info['email'],)
+
+class LangGroup(models.Model):
+    # group_id = models.CharField(max_length=36, primary_key=True)
+    chat_room_id = models.ForeignKey('ChatRoom', to_field='id', on_delete=models.CASCADE)
+    board_id = models.ForeignKey('Board', to_field='id', on_delete=models.CASCADE)
+    capacity = models.IntegerField()
+    user_count = models.IntegerField()
+    name = models.CharField(max_length=100)
+    invitation_code = models.CharField(max_length=6)
+    time_created = models.DateField(default=timezone.now)
+    time_last_modified = models.DateField(default=timezone.now)
+
+class Message(models.Model):
+    MESSAGE_TYPE = (
+        ('pm', 'PLAIN_MESSAGE'),
+        ('pl', 'POLL'),
+        ('mr', 'MERGE_REQUEST'),
+        ('gm', 'INTER_GROUP_MESSAGE'),
+        ('nm', 'NEW_MEMBER'),
+    )
+    # message_id = models.CharField(max_lengoth=36, primary_key=True)
+    chat_room_id = models.ForeignKey('ChatRoom', to_field='id', on_delete=models.CASCADE)
+    message_content = models.CharField(max_length=1000)
+    message_type = models.CharField(max_length=20, choices=MESSAGE_TYPE)
+    time_created = models.DateField(default=django.utils.timezone.now)
+    time_last_modified = models.DateField(default=django.utils.timezone.now)
+
+class Board(models.Model):
+    group_id = models.ForeignKey('LangGroup', to_field='id', on_delete=models.CASCADE)
+    location_id = models.ForeignKey('Location', to_field='id', on_delete=models.CASCADE)
+    time = models.DateTimeField()
+    time_created = models.TimeField(default=django.utils.timezone.now)
+    time_last_modified = models.TimeField(default=django.utils.timezone.now)
+
+class ChatRoom(models.Model):
+    event_id = models.ForeignKey(LangGroup, to_field='id', on_delete=models.CASCADE)
+    user_count = models.IntegerField()
+    time_created = models.DateField(default=django.utils.timezone.now)
+    time_last_modified = models.DateField(default=django.utils.timezone.now)
+
+class Location(models.Model):
+    latitude = models.DecimalField(max_digits=9, decimal_places=6)
+    longtitude = models.DecimalField(max_digits=9, decimal_places=6)
+    address = models.CharField(max_length=100)
+    zip = models.IntegerField()
