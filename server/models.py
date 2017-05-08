@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import uuid
 
 from django.db import models
-from django.utils import timezone
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your models here.
@@ -29,45 +29,63 @@ class Identity(models.Model):
     #timeCreated = models.DateField(default=timezone.now)
     #timeLastModified = models.DateField(default=timezone.now)
 
-    def passwordValidate(self, password):
+    @classmethod
+    def login(cls, username, password, device_token=None, platform=None):
+        try:
+            q = Identity.objects.get(username=username)
+        except ObjectDoesNotExist:
+            print 'username not exist'
+            return False
+        print q.password, password
+        return q.password == password
+
+    @classmethod
+    def passwordValidate(cls, password):
         # check length
         if len(password) < 8 or len(password) > 20:
             return False
 
         # check contains lowercase
         lowerCase = False
-        for i in range('a', 'z' + 1):
-            if i in password:
+        for i in range(ord('a'), ord('z') + 1):
+            if chr(i) in password:
                 lowerCase = True
                 break
         if not lowerCase:
             return False
-
+        print 'has lower case'
         # check contains uppercase
         upperCase = False
-        for i in range('A', 'Z' + 1):
-            if i in password:
+        for i in range(ord('A'), ord('Z') + 1):
+            if chr(i) in password:
                 upperCase = True
                 break
         if not upperCase:
             return False
+        print 'has upper case'
 
         num = False
-        for i in range('0', '9'):
-            if i in password:
+        for i in range(ord('0'), ord('9')):
+            if chr(i) in password:
                 num = True
                 break
         if not num:
             return False
+        print 'has number'
+        return True
 
     @classmethod
     def create(cls, user_info):
         if not cls.passwordValidate(user_info['password']):
+            print 'invalid password', user_info['password']
             return False
+        print 'creating', user_info['username'], user_info['password']
         identity = cls(
-            user_id=uuid.uuid4(),
             username=user_info['username'],
             password=user_info['password'],
             first_name=user_info['first_name'],
-            last_name=user_info['last_name'],
-            email=user_info['email'],)
+            last_name=user_info['last_name'],)
+        identity.save()
+            #email=user_info['email'],)
+        return identity
+
