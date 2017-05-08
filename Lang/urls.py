@@ -23,6 +23,10 @@ from server import views
 router = routers.DefaultRouter()
 router.register(r'identity', views.IdentityViewSet)
 router.register(r'lang_group', views.LangGroupViewSet)
+router.register(r'message', views.MessageViewSet)
+router.register(r'chat_room', views.ChatRoomViewSet)
+router.register(r'board', views.BoardViewSet)
+router.register(r'location', views.LocationViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

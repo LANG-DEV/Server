@@ -11,9 +11,9 @@ from django.utils import timezone
 
 class Identity(models.Model):
     USER_STATUS = (
-        'ACTIVE',
-        'OFFLINE',
-        'NEW',
+        ('act', 'ACTIVE'),
+        ('off', 'OFFLINE'),
+        ('new', 'NEW'),
     )
     #user_id = models.CharField(max_length=36, primary_key=True)
     username = models.CharField(max_length=20, unique=True, db_index=True)
@@ -72,6 +72,7 @@ class Identity(models.Model):
             first_name=user_info['first_name'],
             last_name=user_info['last_name'],
             email=user_info['email'],)
+        identity.save()
 
 class LangGroup(models.Model):
     # group_id = models.CharField(max_length=36, primary_key=True)
@@ -114,6 +115,21 @@ class ChatRoom(models.Model):
 
 class Location(models.Model):
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
-    longtitude = models.DecimalField(max_digits=9, decimal_places=6)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6)
     address = models.CharField(max_length=100)
     zip = models.IntegerField()
+
+
+class Poll(models.Model):
+    POLL_STATUS = {
+        ('on', 'ON_GOING'),
+        ('fin', 'FINISHED'),
+    }
+    status = models.CharField(max_length=20, choices=POLL_STATUS)
+    num_participant = models.IntegerField()
+    num_voted = models.IntegerField()
+
+
+class Option(models.Model):
+    # poll_id
+    pass
