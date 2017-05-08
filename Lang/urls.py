@@ -21,7 +21,7 @@ from rest_framework import routers
 from server import views
 
 router = routers.DefaultRouter()
-router.register(r'identity', views.IdentityViewSet)
+router.register(r'identity', views.IdentityViewSet) # /identity
 
 urlpatterns = [
     url(r'^', include(router.urls)),

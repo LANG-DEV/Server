@@ -18,7 +18,7 @@ class IdentityViewSet(viewsets.ModelViewSet):
     queryset = Identity.objects.all()
     serializer_class = IdentitySerializer
 
-    @list_route(methods=['post'])
+    @list_route(methods=['post']) # /signup
     def signup(self, request, pk=None):
         print '/identity/signup', request.POST
         if not request.POST.get('user_info'):
