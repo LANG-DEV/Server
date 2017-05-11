@@ -14,20 +14,20 @@ class Identity(models.Model):
         'OFFLINE',
         'NEW',
     )
-    #user_id = models.CharField(max_length=36, primary_key=True)
+    # user_id = models.CharField(max_length=36, primary_key=True)
     username = models.CharField(max_length=20, unique=True, db_index=True)
-    #icon = models.ForeignKey('Image.image_id', on_delete=models.SET_NULL)
+    # icon = models.ForeignKey('Image.image_id', on_delete=models.SET_NULL)
     password = models.CharField(max_length=20)
     first_name = models.CharField(max_length=36)
     last_name = models.CharField(max_length=36)
-    status = models.CharField(max_length=10, default='NEW')#choices=USER_STATUS, default='NEW')
-    #email = models.CharField(max_length=50)
-    #birthday = models.DateField()
-    #facebook = models.CharField(max_length=50)
-    #deviceToken = models.CharField(max_length=152)
-    #platform = models.CharField(max_length=10, choices=('android', 'ios'))
-    #timeCreated = models.DateField(default=timezone.now)
-    #timeLastModified = models.DateField(default=timezone.now)
+    status = models.CharField(max_length=10, default='NEW')  # choices=USER_STATUS, default='NEW')
+    # email = models.CharField(max_length=50)
+    # birthday = models.DateField()
+    # facebook = models.CharField(max_length=50)
+    # deviceToken = models.CharField(max_length=152)
+    # platform = models.CharField(max_length=10, choices=('android', 'ios'))
+    # timeCreated = models.DateField(default=timezone.now)
+    # timeLastModified = models.DateField(default=timezone.now)
 
     @classmethod
     def login(cls, username, password, device_token=None, platform=None):
@@ -86,6 +86,6 @@ class Identity(models.Model):
             first_name=user_info['first_name'],
             last_name=user_info['last_name'],)
         identity.save()
-            #email=user_info['email'],)
+            # email=user_info['email'],)
         return identity
 

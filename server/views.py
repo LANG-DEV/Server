@@ -6,10 +6,12 @@ from rest_framework.decorators import detail_route, list_route
 from django.http import *
 from serializers import IdentitySerializer
 import json
+import jwt
 
 # Create your views here.
 from server.models import Identity
 
+PRIVATE_KEY = 'secret'
 
 class IdentityViewSet(viewsets.ModelViewSet):
     """
@@ -43,6 +45,29 @@ class IdentityViewSet(viewsets.ModelViewSet):
         print 'try login'
         res = Identity.login(request.POST.get('username'), request.POST.get('password'))
         if res:
-            return Response(res)
+            # include the generated jwt in response
+            # TODO: private key?
+            token = jwt.encode({
+                'username': request.POST.get('username'),
+                'password': request.POST.get('password'),
+                # 'exp': 100000 expiration time
+            }, PRIVATE_KEY)
+            response = json.dump({'jwt': token, 'success': res})
+            return Response(response)
         else:
             return HttpResponseForbidden()
+
+
+def jwtAuthentication(token):
+    try:
+        jwt.decode(token, PRIVATE_KEY)
+    except jwt.InvalidTokenError:
+        print 'Token invalid'
+        return False
+    except jwt.DecodeError:
+        print 'Signature verification failed'
+        return False
+    except jwt.ExpiredSignatureError:
+        print 'Token has expired'
+        return False
+    return True
