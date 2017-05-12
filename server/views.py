@@ -46,28 +46,12 @@ class IdentityViewSet(viewsets.ModelViewSet):
         res = Identity.login(request.POST.get('username'), request.POST.get('password'))
         if res:
             # include the generated jwt in response
-            # TODO: private key?
+            # TODO: jwt payload??
             token = jwt.encode({
-                'username': request.POST.get('username'),
-                'password': request.POST.get('password'),
+                'username': request.POST.get('username')
                 # 'exp': 100000 expiration time
             }, PRIVATE_KEY)
-            response = json.dump({'jwt': token, 'success': res})
+            response = json.dumps({'jwt': token, 'success': res})
             return Response(response)
         else:
             return HttpResponseForbidden()
-
-
-def jwtAuthentication(token):
-    try:
-        jwt.decode(token, PRIVATE_KEY)
-    except jwt.InvalidTokenError:
-        print 'Token invalid'
-        return False
-    except jwt.DecodeError:
-        print 'Signature verification failed'
-        return False
-    except jwt.ExpiredSignatureError:
-        print 'Token has expired'
-        return False
-    return True
