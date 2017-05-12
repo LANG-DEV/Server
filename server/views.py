@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 from django.http import *
 from serializers import IdentitySerializer
+from datetime import datetime, timedelta
 import json
 import jwt
 
@@ -48,8 +49,8 @@ class IdentityViewSet(viewsets.ModelViewSet):
             # include the generated jwt in response
             # TODO: jwt payload??
             token = jwt.encode({
-                'username': request.POST.get('username')
-                # 'exp': 100000 expiration time
+                'username': request.POST.get('username'),
+                'exp': datetime.now() + timedelta(days=1)  # TODO: change default time?
             }, PRIVATE_KEY)
             response = json.dumps({'jwt': token, 'success': res})
             return Response(response)

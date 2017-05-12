@@ -1,6 +1,6 @@
 import jwt
 
-PRIVATE_KEY = 'secret'
+PRIVATE_KEY = 'secret'  # TODO: where to put the private key?
 
 
 def authenticate(token):
@@ -20,6 +20,6 @@ def authenticate(token):
 
 class JWTAuthenticationMiddleWare(object):
     def process_request(self, request):
-        token = request.GET.get('jwt')  # TODO: get token from request header
-        if authenticate(token):
-            return jwt.decode(token, verify=False).get('username')  # probably not return?
+        token = request.GET.get('jwt')
+        if token is not None and authenticate(token):
+            return jwt.decode(token, verify=False).get('username')  # TODO: get username, return or what?
